@@ -115,6 +115,37 @@ function extractErrors(lines: string[]): string {
     .join("\n");
 }
 
+function topErrors(lines: string[]): string {
+
+  const errors: Record<string, number> = {};
+
+  lines.forEach(line => {
+
+    if (!line.toUpperCase().includes("ERROR")) {
+      return;
+    }
+
+    const message = line.replace(/^.*ERROR[:\s]*/i, "").trim();
+
+    errors[message] = (errors[message] ?? 0) + 1;
+
+  });
+
+  const sorted = Object.entries(errors)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
+
+  if (sorted.length === 0) {
+    return "No errors found.";
+  }
+
+  return [
+    "Top errors:",
+    "",
+    ...sorted.map(([msg, count]) => `${count}  ${msg}`)
+  ].join("\n");
+}
+
 function analyzeWebLog(lines: string[]): string {
   const methods: Record<string, number> = {};
   const statuses = {
@@ -191,6 +222,7 @@ async function runAnalyzer(): Promise<void> {
   console.log("3) Search keyword");
   console.log("4) Show first N lines");
   console.log("5) Analyze web/network log");
+  console.log("6) Top errors");
 
   const choice = await ask("Choose option: ");
   const filePath = await ask("Enter log file path: ");
@@ -231,10 +263,12 @@ async function runAnalyzer(): Promise<void> {
       .join("\n");
   } else if (choice === "5") {
     result = analyzeWebLog(lines);
-  } else {
-    console.log("Unknown option.");
-    return;
-  }
+  }  else if (choice === "6") {
+   result = topErrors(lines);
+} else {
+   console.log("Unknown option.");
+   return;
+}
 
   console.log("\n=== Result ===\n");
   console.log(result);

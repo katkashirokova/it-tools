@@ -2,7 +2,7 @@
 
 Developer CLI tool for analyzing log files.
 
-This utility helps developers, QA engineers and DevOps quickly inspect logs, detect errors and search for specific events in large log files.
+This utility helps developers, QA engineers and DevOps quickly inspect logs, detect errors and analyze events in large log files.
 
 ## Features
 
@@ -10,6 +10,8 @@ This utility helps developers, QA engineers and DevOps quickly inspect logs, det
 - Extract ERROR lines
 - Search logs by keyword
 - Show first N lines of a log file
+- Analyze web/network logs (HTTP methods, status codes, slow requests)
+- Show top repeated error messages
 - Clipboard copy support
 - Repeat operations without restarting the tool
 
@@ -49,6 +51,8 @@ log-analyzer
 2) Show ERROR lines
 3) Search keyword
 4) Show first N lines
+5) Analyze web/network log
+6) Top errors
 ```
 
 When prompted, enter the path to the log file.
@@ -83,6 +87,47 @@ ERROR: 2
 WARN: 1
 INFO: 2
 DEBUG: 1
+```
+
+### Top Errors Example
+
+```
+Top errors:
+
+3  Failed to connect to database
+1  Timeout while connecting
+```
+
+## Example Web / Network Log
+
+```
+GET /api/users 200 120ms
+POST /api/login 401 87ms
+GET /static/app.js 304 12ms
+GET /api/report 200 1450ms
+POST /api/export 500 2300ms
+```
+
+Example result:
+
+```
+Web / Network log summary:
+
+Total requests: 5
+
+HTTP status summary:
+2xx: 2
+3xx: 1
+4xx: 1
+5xx: 1
+
+Methods:
+GET: 3
+POST: 2
+
+Slow requests (>1000ms):
+4: GET /api/report 200 1450ms
+5: POST /api/export 500 2300ms
 ```
 
 ## Tech Stack
