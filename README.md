@@ -12,6 +12,7 @@ These tools are designed to help developers, QA engineers and integration engine
 | **Data Format Converter** | Convert JSON, Base64 and URL encoded data |
 | **CURL Parser** | Parse curl commands into readable HTTP requests |
 | **JSON Debugger** | Validate, format and analyze JSON data |
+| **Log Analyzer** | Analyze log files, detect errors and search logs |
 
 ---
 
@@ -142,6 +143,38 @@ json-debugger
 
 ---
 
+## Log Analyzer
+
+CLI tool for analyzing log files.
+
+Features:
+
+- Log level summary (ERROR / WARN / INFO / DEBUG)
+- Extract ERROR lines
+- Search logs by keyword
+- Show first N lines of log file
+- clipboard copy support
+- repeat operations without restarting the tool
+
+Project location: `LogAnalyzer/`
+
+Run:
+
+```bash
+cd LogAnalyzer
+npm install
+npm run build
+npm start
+```
+
+Run as CLI tool:
+
+```bash
+log-analyzer
+```
+
+---
+
 ## Tech Stack
 
 - TypeScript  
@@ -154,5 +187,4 @@ json-debugger
 
 More developer utilities planned for this toolkit:
 
-- Log Analyzer  
 - Test Data Generator  
