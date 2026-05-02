@@ -12,7 +12,7 @@ These tools are designed to help developers, QA engineers and integration engine
 | **Data Format Converter** | Convert JSON, Base64 and URL encoded data |
 | **CURL Parser** | Parse curl commands into readable HTTP requests |
 | **JSON Debugger** | Validate, format and analyze JSON data |
-| **Log Analyzer** | Analyze log files, detect errors and search logs |
+| **Log Analyzer** | Analyze log files, detect errors and inspect web/network logs |
 
 ---
 
@@ -153,6 +153,7 @@ Features:
 - Extract ERROR lines
 - Search logs by keyword
 - Show first N lines of log file
+- Analyze web / network logs (HTTP methods, status codes, slow requests)
 - clipboard copy support
 - repeat operations without restarting the tool
 
@@ -187,4 +188,4 @@ log-analyzer
 
 More developer utilities planned for this toolkit:
 
-- Test Data Generator  
+- Test Data Generator (UUID, emails, timestamps, random JSON)
