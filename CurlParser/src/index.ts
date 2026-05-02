@@ -32,27 +32,43 @@ function parseCurl(command: string) {
   };
 }
 
-function printRequest(parsed: any) {
-  console.log("\n=== Parsed HTTP Request ===\n");
-
-  console.log(`Method: ${parsed.method}`);
-  console.log(`URL: ${parsed.url}`);
-
-  console.log("\nHeaders:");
-
-  if (parsed.headers.length === 0) {
-    console.log("None");
-  } else {
-    parsed.headers.forEach((h: string) => console.log(h));
+function printRawHttpRequest(parsed: any): void {
+  if (!parsed.url) {
+    return;
   }
 
-  console.log("\nBody:");
+  const url = new URL(parsed.url);
+  const path = `${url.pathname}${url.search}`;
+
+  console.log("\n=== HTTP Request View ===\n");
+  console.log(`${parsed.method} ${path} HTTP/1.1`);
+  console.log(`Host: ${url.host}`);
+
+  parsed.headers.forEach((header: string) => {
+    console.log(header);
+  });
 
   if (parsed.body) {
+    console.log("");
     console.log(parsed.body);
-  } else {
-    console.log("None");
   }
+}
+
+function printRequest(parsed: any) {
+console.log("\nBody:");
+
+if (!parsed.body) {
+  console.log("None");
+  return;
+}
+
+try {
+  const json = JSON.parse(parsed.body);
+  console.log("JSON:\n");
+  console.log(JSON.stringify(json, null, 2));
+} catch {
+  console.log(parsed.body);
+}
 }
 
 async function main() {
@@ -63,7 +79,8 @@ async function main() {
   const parsed = parseCurl(input);
 
   printRequest(parsed);
-
+  printRawHttpRequest(parsed);
+  
   rl.close();
 }
 
