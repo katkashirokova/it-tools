@@ -11,6 +11,7 @@ These tools are designed to help developers, QA engineers and integration engine
 | **Timestamp Converter** | Convert Unix timestamps, dates and timezones |
 | **Data Format Converter** | Convert JSON, Base64 and URL encoded data |
 | **CURL Parser** | Parse curl commands into readable HTTP requests |
+| **JSON Debugger** | Validate, format and analyze JSON data |
 
 ---
 
@@ -107,6 +108,40 @@ curl-parser
 
 ---
 
+## JSON Debugger
+
+CLI tool for validating, formatting and analyzing JSON.
+
+Features:
+
+- Validate JSON  
+- Pretty format JSON  
+- Minify JSON  
+- Detect JSON errors with line and column  
+- Show JSON structure  
+- Show JSON paths  
+- multiline input support  
+- clipboard copy support  
+
+Project location: `JsonDebugger/`
+
+Run:
+
+```bash
+cd JsonDebugger
+npm install
+npm run build
+npm start
+```
+
+Run as CLI tool:
+
+```bash
+json-debugger
+```
+
+---
+
 ## Tech Stack
 
 - TypeScript  
@@ -119,6 +154,5 @@ curl-parser
 
 More developer utilities planned for this toolkit:
 
-- JSON Debugger  
 - Log Analyzer  
 - Test Data Generator  
