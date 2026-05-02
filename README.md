@@ -13,6 +13,7 @@ These tools are designed to help developers, QA engineers and integration engine
 | **CURL Parser** | Parse curl commands into readable HTTP requests |
 | **JSON Debugger** | Validate, format and analyze JSON data |
 | **Log Analyzer** | Analyze log files, detect errors and inspect web/network logs |
+| **Test Data Generator** | Generate UUIDs, emails, timestamps and API test data |
 
 ---
 
@@ -176,16 +177,42 @@ log-analyzer
 
 ---
 
+## Test Data Generator
+
+CLI tool for generating test data.
+
+Features:
+
+- Generate UUID
+- Generate random email addresses
+- Generate timestamps
+- Generate test user JSON objects
+- Generate API payload JSON
+- Generate multiple emails
+- clipboard copy support
+- repeat operations without restarting the tool
+
+Project location: `TestDataGenerator/`
+
+Run:
+
+```bash
+cd TestDataGenerator
+npm install
+npm run build
+npm start
+```
+
+Run as CLI tool:
+
+```bash
+test-data-generator
+```
+
+---
+
 ## Tech Stack
 
 - TypeScript  
 - Node.js  
 - CLI utilities  
-
----
-
-## Planned Tools
-
-More developer utilities planned for this toolkit:
-
-- Test Data Generator (UUID, emails, timestamps, random JSON)
