@@ -19,17 +19,70 @@ Features:
 - seconds ↔ milliseconds detection
 - timezone conversion
 - clipboard copy support
+- timezone formatting
 
 Project location: `Timestamp/`
 
-## Run
+Run:
 
+```bash
 cd Timestamp
 npm install
 npm run build
 npm start
+```
 
-### Run CLI
+Run as CLI tool:
 
 ```bash
 timestamp
+```
+
+---
+
+### Data Format Converter
+
+CLI tool for converting and formatting common data formats.
+
+Features:
+
+- JSON pretty formatting
+- JSON minification
+- Base64 encode / decode
+- URL encoding / decoding
+- multiline input support
+- clipboard copy support
+
+Project location: `DataFormatConverter/`
+
+Run:
+
+```bash
+cd DataFormatConverter
+npm install
+npm run build
+npm start
+```
+
+Run as CLI tool:
+
+```bash
+data-converter
+```
+
+---
+
+## Tech Stack
+
+- TypeScript
+- Node.js
+- CLI utilities
+
+## Planned Tools
+
+More developer utilities are planned for this toolkit:
+
+- CURL Parser
+- JSON Debugger
+- Log Analyzer
+- Test Data Generator
