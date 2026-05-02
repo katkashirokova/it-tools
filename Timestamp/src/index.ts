@@ -57,15 +57,15 @@ function parseTimestamp(input: string): Date | null {
 }
 
 async function offerClipboard(value: string): Promise<void> {
-  const answer = await ask("Copy result to clipboard? y/n: ");
+  const answer = await ask("\nCopy result to clipboard? y/n: ");
 
   if (answer.trim().toLowerCase() === "y") {
     copyToClipboard(value);
   }
 }
 
-async function main(): Promise<void> {
-  console.log("=== Timestamp Converter ===");
+async function runConverter(): Promise<void> {
+  console.log("\n=== Timestamp Converter ===");
   console.log("1) Current timestamp");
   console.log("2) Timestamp to date");
   console.log("3) Date to timestamp");
@@ -122,7 +122,9 @@ async function main(): Promise<void> {
     }
   } else if (choice === "4") {
     const timestamp = await ask("Enter timestamp in seconds or milliseconds: ");
-    const timeZone = await ask("Enter timezone, for example Europe/Sofia or America/New_York: ");
+    const timeZone = await ask(
+      "Enter timezone, for example Europe/Sofia or America/New_York: "
+    );
 
     const date = parseTimestamp(timestamp);
 
@@ -148,8 +150,24 @@ async function main(): Promise<void> {
   } else {
     console.log("Unknown option.");
   }
+}
+
+async function main(): Promise<void> {
+  while (true) {
+    await runConverter();
+
+    const again = await ask("\nDo you want to perform another operation? y/n: ");
+
+    if (again.trim().toLowerCase() !== "y") {
+      console.log("Goodbye!");
+      break;
+    }
+  }
 
   rl.close();
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
