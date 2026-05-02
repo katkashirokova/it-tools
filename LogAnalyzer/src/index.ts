@@ -146,6 +146,28 @@ function topErrors(lines: string[]): string {
   ].join("\n");
 }
 
+function errorTimeline(lines: string[]): string {
+  const errors = lines
+    .map((line, index) => ({ line, number: index + 1 }))
+    .filter((item) => item.line.toUpperCase().includes("ERROR"))
+    .map((item) => {
+      const timestampMatch = item.line.match(
+        /\b\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}\b/
+      );
+
+      const timestamp = timestampMatch ? timestampMatch[0] : "No timestamp";
+      const message = item.line.replace(/^.*ERROR[:\s]*/i, "").trim();
+
+      return `${timestamp} | line ${item.number} | ${message}`;
+    });
+
+  if (errors.length === 0) {
+    return "No ERROR lines found.";
+  }
+
+  return ["Error timeline:", "", ...errors].join("\n");
+}
+
 function analyzeWebLog(lines: string[]): string {
   const methods: Record<string, number> = {};
   const statuses = {
@@ -223,6 +245,7 @@ async function runAnalyzer(): Promise<void> {
   console.log("4) Show first N lines");
   console.log("5) Analyze web/network log");
   console.log("6) Top errors");
+  console.log("7) Error timeline");
 
   const choice = await ask("Choose option: ");
   const filePath = await ask("Enter log file path: ");
@@ -265,9 +288,11 @@ async function runAnalyzer(): Promise<void> {
     result = analyzeWebLog(lines);
   }  else if (choice === "6") {
    result = topErrors(lines);
+} else if (choice === "7") {
+  result = errorTimeline(lines);
 } else {
-   console.log("Unknown option.");
-   return;
+  console.log("Unknown option.");
+  return;
 }
 
   console.log("\n=== Result ===\n");

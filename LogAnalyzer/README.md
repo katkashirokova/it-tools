@@ -12,6 +12,7 @@ This utility helps developers, QA engineers and DevOps quickly inspect logs, det
 - Show first N lines of a log file
 - Analyze web/network logs (HTTP methods, status codes, slow requests)
 - Show top repeated error messages
+- Show error timeline
 - Clipboard copy support
 - Repeat operations without restarting the tool
 
@@ -53,6 +54,7 @@ log-analyzer
 4) Show first N lines
 5) Analyze web/network log
 6) Top errors
+7) Error timeline
 ```
 
 When prompted, enter the path to the log file.
@@ -98,7 +100,16 @@ Top errors:
 1  Timeout while connecting
 ```
 
-## Example Web / Network Log
+### Error Timeline Example
+
+```
+Error timeline:
+
+2026-05-02 10:00:04 | line 4 | Failed to connect to database
+2026-05-02 10:00:06 | line 6 | Timeout while connecting
+```
+
+### Example Web / Network Log
 
 ```
 GET /api/users 200 120ms
