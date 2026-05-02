@@ -1,0 +1,28 @@
+{
+  "name": "log-analyzer",
+  "version": "1.0.0",
+  "description": "Developer CLI tool for analyzing log files and detecting errors",
+  "main": "dist/index.js",
+  "bin": {
+    "log-analyzer": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "logs",
+    "log-analyzer",
+    "debugging",
+    "errors",
+    "cli",
+    "developer-tools"
+  ],
+  "author": "Ekaterina Shirokova",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
+  }
+}
