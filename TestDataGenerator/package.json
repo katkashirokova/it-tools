@@ -1,0 +1,29 @@
+{
+  "name": "test-data-generator",
+  "version": "1.0.0",
+  "description": "Developer CLI tool for generating test data for QA and API testing",
+  "main": "dist/index.js",
+  "bin": {
+    "test-data-generator": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "test-data",
+    "qa",
+    "api-testing",
+    "uuid",
+    "mock-data",
+    "developer-tools",
+    "cli"
+  ],
+  "author": "Ekaterina Shirokova",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
+  }
+}
