@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import readline = require("readline");
 import child_process = require("child_process");
 
