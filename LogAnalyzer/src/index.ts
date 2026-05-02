@@ -115,12 +115,82 @@ function extractErrors(lines: string[]): string {
     .join("\n");
 }
 
+function analyzeWebLog(lines: string[]): string {
+  const methods: Record<string, number> = {};
+  const statuses = {
+    "2xx": 0,
+    "3xx": 0,
+    "4xx": 0,
+    "5xx": 0,
+  };
+
+  const slowRequests: string[] = [];
+  let totalRequests = 0;
+
+  lines.forEach((line, index) => {
+    const methodMatch = line.match(/\b(GET|POST|PUT|DELETE|PATCH|OPTIONS|HEAD)\b/i);
+    const statusMatch = line.match(/\b([1-5]\d{2})\b/);
+    const timeMatch = line.match(/\b(\d+)\s?ms\b/i);
+
+    if (!methodMatch && !statusMatch) {
+      return;
+    }
+
+    totalRequests++;
+
+    if (methodMatch && methodMatch[1]) {
+  const method = methodMatch[1].toUpperCase();
+  methods[method] = (methods[method] ?? 0) + 1;
+}
+
+    if (statusMatch) {
+      const status = Number(statusMatch[1]);
+
+      if (status >= 200 && status < 300) statuses["2xx"]++;
+      else if (status >= 300 && status < 400) statuses["3xx"]++;
+      else if (status >= 400 && status < 500) statuses["4xx"]++;
+      else if (status >= 500 && status < 600) statuses["5xx"]++;
+    }
+
+    if (timeMatch) {
+      const time = Number(timeMatch[1]);
+
+      if (time > 1000) {
+        slowRequests.push(`${index + 1}: ${line}`);
+      }
+    }
+  });
+
+  const methodLines = Object.entries(methods)
+    .map(([method, count]) => `${method}: ${count}`)
+    .join("\n");
+
+  return [
+    "Web / Network log summary:",
+    `Total requests: ${totalRequests}`,
+    "",
+    "HTTP status summary:",
+    `2xx: ${statuses["2xx"]}`,
+    `3xx: ${statuses["3xx"]}`,
+    `4xx: ${statuses["4xx"]}`,
+    `5xx: ${statuses["5xx"]}`,
+    "",
+    "Methods:",
+    methodLines || "None detected",
+    "",
+    "Slow requests (>1000ms):",
+    slowRequests.length > 0 ? slowRequests.join("\n") : "None detected",
+  ].join("\n");
+}
+
+
 async function runAnalyzer(): Promise<void> {
   console.log("\n=== Log Analyzer ===");
   console.log("1) Show log level summary");
   console.log("2) Show ERROR lines");
   console.log("3) Search keyword");
   console.log("4) Show first N lines");
+  console.log("5) Analyze web/network log");
 
   const choice = await ask("Choose option: ");
   const filePath = await ask("Enter log file path: ");
@@ -143,22 +213,24 @@ async function runAnalyzer(): Promise<void> {
     const keyword = await ask("Enter keyword to search: ");
     result = findLines(lines, keyword);
   } else if (choice === "4") {
-  const input = await ask("How many lines to show? (default 20, max 200): ");
+    const input = await ask("How many lines to show? (default 20, max 200): ");
 
-  let count = Number(input.trim());
+    let count = Number(input.trim());
 
-  if (Number.isNaN(count) || count <= 0) {
-    count = 20;
-  }
+    if (Number.isNaN(count) || count <= 0) {
+      count = 20;
+    }
 
-  if (count > 200) {
-    count = 200;
-  }
+    if (count > 200) {
+      count = 200;
+    }
 
-  result = lines
-    .slice(0, count)
-    .map((line, index) => `${index + 1}: ${line}`)
-    .join("\n");
+    result = lines
+      .slice(0, count)
+      .map((line, index) => `${index + 1}: ${line}`)
+      .join("\n");
+  } else if (choice === "5") {
+    result = analyzeWebLog(lines);
   } else {
     console.log("Unknown option.");
     return;
